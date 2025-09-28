@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Student Report Card</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Login</title>
+  <script>
+    function validateLogin() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      if (username === "saranathan" && password === "1234") {
+        window.location.href = "index.html"; // Redirect to your main page
+      } else {
+        alert("Invalid username or password");
+      }
+
+      return false; // Prevent form from submitting normally
+    }
+  </script>
 </head>
 <body>
-    <h1>Smart Student Report Card</h1>
-
-    <label>Student Name:</label>
-    <input type="text" id="name"><br><br>
-
-    <label>Marks (comma separated):</label>
-    <input type="text" id="marks"><br><br>
-
-    <button onclick="calculateReport()">Generate Report</button>
-
-    <h2>Result:</h2>
-    <div id="result"></div>
-
-    <script src="script.js"></script>
+  <h2>Login</h2>
+  <form onsubmit="return validateLogin()">
+    <label>Username:</label><br>
+    <input type="text" id="username" required><br><br>
+    <label>Password:</label><br>
+    <input type="password" id="password" required><br><br>
+    <input type="submit" value="Login">
+  </form>
 </body>
 </html>
+
