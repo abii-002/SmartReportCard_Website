@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Report Card - Results</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f8f9fa; margin:0; padding:0; }
+header { background: teal; color:white; padding:15px; text-align:center; }
+.container { padding:20px; max-width:800px; margin:auto; }
+table { width:100%; border-collapse:collapse; margin-top:20px; }
+table, th, td { border:1px solid #ccc; }
+th, td { padding:10px; text-align:center; }
+th { background:#f0f0f0; }
+button { padding:10px 20px; margin-top:15px; cursor:pointer; border:none; border-radius:6px; }
+.logout-btn { background: crimson; color:white; }
+.logout-btn:hover { background: darkred; }
+</style>
+<script>
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.href = "login.html";
+}
+
+function logout() {
+  sessionStorage.removeItem("loggedIn");
+  sessionStorage.removeItem("students"); // optional: clear all data
+  window.location.href = "login.html";
+}
+
+window.onload = function() {
+  let students = JSON.parse(sessionStorage.getItem("students")) || [];
+
+  if (students.length === 0) {
+    document.getElementById("resultsTable").innerHTML = "<p>No student data available. Please add students first.</p>";
+    return;
+  }
+
+  // Sort by average descending
+  students.sort((a,b) => b.average - a.average);
+
+  let table = "<table><tr><th>Rank</th><th>Name</th><th>Total</th><th>Average</th><th>Grade</th></tr>";
+  for (let i=0; i<students.length; i++){
+    table += `<tr><td>${i+1}</td><td>${students[i].name}</td><td>${students[i].total}</td><td>${students[i].average.toFixed(2)}</td><td>${students[i].grade}</td></tr>`;
+  }
+  table += "</table>";
+
+  document.getElementById("resultsTable").innerHTML = table;
+};
+</script>
+</head>
+<body>
+<header>
+<h1>📊 Smart Report Card - Results</h1>
+</header>
+
+<div class="container">
+<div id="resultsTable"></div>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+</body>
+</html>
